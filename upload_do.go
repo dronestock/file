@@ -29,7 +29,7 @@ func (u *upload) store(plugin *plugin, filenames []string) (err error) {
 		if file, oe := os.Open(filename); nil != oe {
 			err = oe
 		} else {
-			err = plugin.ftp.Stor(filename, file)
+			err = plugin.ftp.Stor(gfx.Name(filename), file)
 		}
 
 		if nil != err {
