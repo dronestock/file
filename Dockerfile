@@ -5,25 +5,19 @@ LABEL author="storezhang<华寅>" \
 email="storezhang@gmail.com" \
 qq="160290688" \
 wechat="storezhang" \
-# TODO 增加描述信息
-description="Drone持续集成Docker插件，增加以下功能：1、xxx；2、xxx"
+description="Drone持续集成Ftp插件，提供如下功能：1、文件上传功能"
 
 
 # 复制文件
-COPY plugin /bin
+COPY ftp /bin
 
 
 RUN set -ex \
     \
     \
     \
-    && apk update \
-    && apk --no-cache add docker \
-    \
-    \
-    \
     # 增加执行权限
-    && chmod +x /bin/plugin \
+    && chmod +x /bin/ftp \
     \
     \
     \
@@ -31,4 +25,4 @@ RUN set -ex \
 
 
 # 执行命令
-ENTRYPOINT /bin/plugin
+ENTRYPOINT /bin/ftp

@@ -17,8 +17,7 @@ steps:
       - name: go
         path: /var/lib/go
     settings:
-      # 可以修改输出文件名，如果修改，Dockerfile也要一起修改
-      output: plugin
+      output: ftp
 
   - name: 发布
     image: ccr.ccs.tencentyun.com/dronestock/docker
@@ -32,8 +31,7 @@ steps:
       PASSWORD_CCR:
         from_secret: password_tencentyun_ccr
     settings:
-      # TODO 修改仓库名
-      repository: dronestock/xxx
+      repository: dronestock/ftp
       registries:
         - username: dronestock
           password: $${PASSWORD_DOCKER}

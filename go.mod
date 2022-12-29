@@ -4,11 +4,14 @@ go 1.18
 
 require (
 	github.com/dronestock/drone v0.6.3
+	github.com/goexl/gfx v0.1.7
 	github.com/goexl/gox v0.1.6
+	github.com/jlaffaye/ftp v0.1.0
 )
 
 require (
 	github.com/drone/envsubst v1.0.3 // indirect
+	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
@@ -21,6 +24,8 @@ require (
 	github.com/goexl/simaqian v0.2.3 // indirect
 	github.com/goexl/xiren v0.0.5 // indirect
 	github.com/google/uuid v1.3.0 // indirect
+	github.com/hashicorp/errwrap v1.0.0 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/rs/xid v1.4.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
