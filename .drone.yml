@@ -1,0 +1,52 @@
+kind: pipeline
+type: docker
+name: 发布
+
+
+clone:
+  disable: true
+
+
+steps:
+  - name: 代码
+    image: ccr.ccs.tencentyun.com/dronestock/git
+
+  - name: 编译
+    image: ccr.ccs.tencentyun.com/pangum/drone
+    volumes:
+      - name: go
+        path: /var/lib/go
+    settings:
+      # 可以修改输出文件名，如果修改，Dockerfile也要一起修改
+      output: plugin
+
+  - name: 发布
+    image: ccr.ccs.tencentyun.com/dronestock/docker
+    privileged: true
+    volumes:
+      - name: docker
+        path: /var/lib/docker
+    environment:
+      PASSWORD_DOCKER:
+        from_secret: token_docker
+      PASSWORD_CCR:
+        from_secret: password_tencentyun_ccr
+    settings:
+      # TODO 修改仓库名
+      repository: dronestock/xxx
+      registries:
+        - username: dronestock
+          password: $${PASSWORD_DOCKER}
+        - hostname: ccr.ccs.tencentyun.com
+          username: "160290688"
+          password: $${PASSWORD_CCR}
+          required: true
+
+
+volumes:
+  - name: go
+    host:
+      path: /var/lib/cache/go
+  - name: docker
+    host:
+      path: /var/lib/cache/docker
