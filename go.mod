@@ -1,4 +1,4 @@
-module github.com/dronestock/todo
+module github.com/dronestock/file
 
 go 1.18
 
@@ -7,6 +7,7 @@ require (
 	github.com/goexl/gfx v0.1.7
 	github.com/goexl/gox v0.1.6
 	github.com/jlaffaye/ftp v0.1.0
+	github.com/rickb777/gowebdav v0.1.0
 )
 
 require (
@@ -27,6 +28,8 @@ require (
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
+	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
+	github.com/rickb777/httpclient v0.0.6 // indirect
 	github.com/rs/xid v1.4.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect

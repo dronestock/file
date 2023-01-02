@@ -7,7 +7,7 @@ import (
 	"github.com/goexl/gox/field"
 )
 
-func (u *upload) do(plugin *plugin) (err error) {
+func (u *upload) ftp(plugin *plugin) (err error) {
 	if err = plugin.ftp.ChangeDir(u.Dir); nil != err {
 		return
 	}

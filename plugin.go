@@ -1,8 +1,6 @@
 package main
 
 import (
-	"time"
-
 	"github.com/dronestock/drone"
 	"github.com/goexl/gox"
 	"github.com/goexl/gox/field"
@@ -12,22 +10,14 @@ import (
 
 type plugin struct {
 	drone.Base
+	*server
 
-	// 地址
-	Addr string `default:"${ADDR}" validate:"required,hostname_port"`
-	// 用户名
-	Username string `default:"${USERNAME}" validate:"required"`
-	// 密码
-	Password string `default:"${Password}" validate:"required"`
-	// 超时
-	Timeout time.Duration `default:"${TIMEOUT=5s}"`
-
+	// 服务器列表
+	Servers []*server `default:"${SERVERS}"`
 	// 上传文件
 	Upload *upload `default:"${UPLOAD}"`
 	// 上传文件列表
 	Uploads []*upload `default:"${UPLOADS}"`
-
-	ftp *ftp.ServerConn
 }
 
 func newPlugin() drone.Plugin {
