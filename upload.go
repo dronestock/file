@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/goexl/gfx"
 	"github.com/goexl/gox/field"
@@ -16,6 +18,10 @@ type upload struct {
 	Filename string `json:"filename"`
 	// 文件名列表
 	Filenames []string `json:"filenames"`
+	// 前缀
+	Prefix string `json:"prefix"`
+	// 后缀
+	Suffix string `json:"suffix"`
 	// 文件权限
 	Permission os.FileMode `default:"0777" json:"permission"`
 }
@@ -49,11 +55,26 @@ func (u *upload) do(uploader uploader, plugin *plugin) (err error) {
 	for _, filename := range u.Filenames {
 		if names, ae := gfx.All(filename); nil != ae {
 			err = ae
-		} else if se := uploader.upload(names, u.Dir, u.Permission); nil != se {
+		} else if se := u.action(names, uploader, plugin); nil != se {
 			err = se
 			plugin.Warn("上传文件出错", field.New("filename", filename), field.Error(err))
 		} else {
 			plugin.Debug("上传文件成功", field.New("filename", filename), field.Error(err))
+		}
+	}
+
+	return
+}
+
+func (u *upload) action(filenames []string, uploader uploader, plugin *plugin) (err error) {
+	for _, filename := range filenames {
+		_, name := filepath.Split(filename)
+		ext := filepath.Ext(filename)
+		final := fmt.Sprintf("%s%s%s%s", u.Prefix, name[:len(name)-len(ext)], u.Suffix, ext)
+		remote := fmt.Sprintf("%s/%s", u.Dir, final)
+
+		if err = uploader.upload(filename, u.Dir, remote, u.Permission); nil != err {
+			plugin.Warn("上传文件出错", field.New("filename", filename), field.Error(err))
 		}
 	}
 

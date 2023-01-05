@@ -6,5 +6,5 @@ import (
 
 type uploader interface {
 	mkdir(dir string, permission os.FileMode) (err error)
-	upload(filenames []string, dir string, permission os.FileMode) (err error)
+	upload(path string, dir string, name string, permission os.FileMode) (err error)
 }
