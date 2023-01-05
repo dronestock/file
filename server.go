@@ -26,6 +26,8 @@ func (s *server) upload(plugin *plugin, uploads []*upload) (err error) {
 		_uploader = newUploaderWebdav(s.Addr, s.Username, s.Password, plugin)
 	case serverTypeFtp:
 		_uploader, err = newUploaderFtp(s.Addr, s.Username, s.Password, s.Timeout, plugin)
+	case serverTypeSsh:
+		_uploader = newUploaderSsh(s.Addr, s.Username, s.Password, plugin)
 	}
 	if nil != err {
 		return

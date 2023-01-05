@@ -1,0 +1,47 @@
+#!/bin/bash
+
+ARGS=$(getopt --options a:u:p:l:r --alternative --longoptions addr:,username:,password:,local:,remote: --name 'scpx' -- "$@")
+if [ $? != 0 ]; then
+    echo "退出..."
+    exit 1
+fi
+
+eval set -- "${ARGS}"
+
+while true
+do
+    case "$1" in
+        -a|--addr)
+            addr=$2
+            shift
+            ;;
+        -u|--username)
+            username=$2;
+            shift
+            ;;
+        -p|--password)
+            password=$2;
+            shift
+            ;;
+        -l|--local)
+            local=$2
+            shift
+            ;;
+        -4|--remote)
+            remote=$2
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            echo "内部错误"
+            exit 1
+            ;;
+    esac
+shift
+done
+
+# 上传文件到服务器
+sshpass -p "${password}" scp "${local}" "${username}@${addr}:${remote}"

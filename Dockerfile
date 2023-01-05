@@ -9,6 +9,7 @@ description="Drone持续集成Ftp插件，提供如下功能：1、文件上传�
 
 
 # 复制文件
+COPY docker /
 COPY file /bin
 
 
@@ -16,7 +17,10 @@ RUN set -ex \
     \
     \
     \
-    # 增加执行权限
+    && apk update \
+    && apk --no-cache add openssh-client sshpass \
+    # 增加执行权限 \
+    && chmod +x /usr/bin/scpx \
     && chmod +x /bin/file \
     \
     \
