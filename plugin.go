@@ -4,16 +4,15 @@ import (
 	"github.com/dronestock/drone"
 	"github.com/goexl/gox"
 	"github.com/goexl/gox/field"
-
-	"github.com/jlaffaye/ftp"
 )
 
 type plugin struct {
 	drone.Base
-	*server
 
+	// 服务器
+	Server *server `default:"${SERVER}" validate:"omitempty,required_without=Servers"`
 	// 服务器列表
-	Servers []*server `default:"${SERVERS}"`
+	Servers []*server `default:"${SERVERS}" validate:"omitempty,required_without=Server"`
 	// 上传文件
 	Upload *upload `default:"${UPLOAD}"`
 	// 上传文件列表
@@ -29,16 +28,16 @@ func (p *plugin) Config() drone.Config {
 }
 
 func (p *plugin) Setup() (unset bool, err error) {
-	if nil != p.Upload {
-		if nil == p.Upload {
-			p.Uploads = make([]*upload, 0, 1)
-		}
-		p.Uploads = append(p.Uploads, p.Upload)
+	if nil == p.Servers {
+		p.Servers = make([]*server, 0, 1)
 	}
+	p.Servers = append(p.Servers, p.Server)
 
-	// 初始化客户端
-	if p.ftp, err = ftp.Dial(p.Addr, ftp.DialWithTimeout(p.Timeout)); nil == err {
-		err = p.ftp.Login(p.Username, p.Password)
+	if nil == p.Uploads {
+		p.Uploads = make([]*upload, 0, 1)
+	}
+	if nil != p.Upload {
+		p.Uploads = append(p.Uploads, p.Upload)
 	}
 
 	return
@@ -52,10 +51,7 @@ func (p *plugin) Steps() drone.Steps {
 
 func (p *plugin) Fields() gox.Fields[any] {
 	return gox.Fields[any]{
-		field.New("addr", p.Addr),
-		field.New("username", p.Username),
-		field.New("password", p.Password),
-
+		field.New("servers", p.Servers),
 		field.New("uploads", p.Uploads),
 	}
 }

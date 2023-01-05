@@ -9,7 +9,7 @@ description="Drone持续集成Ftp插件，提供如下功能：1、文件上传�
 
 
 # 复制文件
-COPY ftp /bin
+COPY file /bin
 
 
 RUN set -ex \
@@ -17,7 +17,7 @@ RUN set -ex \
     \
     \
     # 增加执行权限
-    && chmod +x /bin/ftp \
+    && chmod +x /bin/file \
     \
     \
     \
@@ -25,4 +25,4 @@ RUN set -ex \
 
 
 # 执行命令
-ENTRYPOINT /bin/ftp
+ENTRYPOINT /bin/file

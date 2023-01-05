@@ -17,7 +17,7 @@ steps:
       - name: go
         path: /var/lib/go
     settings:
-      output: ftp
+      output: file
 
   - name: 发布
     image: ccr.ccs.tencentyun.com/dronestock/docker
@@ -31,7 +31,7 @@ steps:
       PASSWORD_CCR:
         from_secret: password_tencentyun_ccr
     settings:
-      repository: dronestock/ftp
+      repository: dronestock/file
       registries:
         - username: dronestock
           password: $${PASSWORD_DOCKER}
