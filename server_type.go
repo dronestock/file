@@ -1,9 +1,10 @@
 package main
 
 const (
-	serverTypeFtp serverType = "ftp"
-	serverTypeWebdav = "webdav"
-	serverTypeSsh = "ssh"
+	// nolint: staticcheck
+	serverTypeFtp    serverType = "ftp"
+	serverTypeWebdav            = "webdav"
+	serverTypeSsh               = "ssh"
 )
 
 type serverType string
