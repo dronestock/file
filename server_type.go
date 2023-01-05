@@ -1,9 +1,9 @@
 package main
 
 const (
-	serverTypeFtp serverType = iota
-	serverTypeWebdav
-	serverTypeSsh
+	serverTypeFtp serverType = "ftp"
+	serverTypeWebdav = "webdav"
+	serverTypeSsh = "ssh"
 )
 
-type serverType uint8
+type serverType string

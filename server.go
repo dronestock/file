@@ -8,7 +8,7 @@ import (
 
 type server struct {
 	// 类型
-	Type serverType `default:"1" json:"type" validate:"required,oneof=1 2"`
+	Type serverType `default:"ssh" json:"type" validate:"required,oneof=ssh webdav ftp"`
 	// 地址
 	Addr string `json:"addr" validate:"required,hostname_port|url"`
 	// 用户名
