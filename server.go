@@ -10,7 +10,7 @@ type server struct {
 	// 类型
 	Type serverType `default:"ssh" json:"type" validate:"required,oneof=ssh webdav ftp"`
 	// 地址
-	Addr string `json:"addr" validate:"required,hostname_port|url"`
+	Addr string `json:"addr" validate:"required,hostname|hostname_port|url"`
 	// 用户名
 	Username string `json:"username" validate:"required"`
 	// 密码
