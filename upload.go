@@ -72,6 +72,7 @@ func (u *upload) action(filenames []string, uploader uploader, plugin *plugin) (
 		ext := filepath.Ext(filename)
 		final := fmt.Sprintf("%s%s%s%s", u.Prefix, name[:len(name)-len(ext)], u.Suffix, ext)
 		// 不在这里组装最终的路径而是把目录传到下一层，是因为怕各个上传服务器路径表现不一致
+		// remote := fmt.Sprintf("%s/%s", u.Dir, final)
 
 		if err = uploader.upload(filename, u.Dir, final, u.Permission); nil != err {
 			plugin.Warn("上传文件出错", field.New("filename", filename), field.Error(err))
