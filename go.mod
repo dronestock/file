@@ -3,7 +3,7 @@ module github.com/dronestock/file
 go 1.18
 
 require (
-	github.com/dronestock/drone v0.6.7
+	github.com/dronestock/drone v0.7.3
 	github.com/goexl/gfx v0.1.7
 	github.com/goexl/gox v0.1.6
 	github.com/jlaffaye/ftp v0.1.0
