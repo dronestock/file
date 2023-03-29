@@ -3,7 +3,7 @@ module github.com/dronestock/file
 go 1.18
 
 require (
-	github.com/dronestock/drone v0.9.3
+	github.com/dronestock/drone v0.9.4
 	github.com/goexl/gfx v0.1.7
 	github.com/goexl/gox v0.2.8
 	github.com/jlaffaye/ftp v0.1.0
@@ -11,7 +11,7 @@ require (
 )
 
 require (
-	github.com/antonmedv/expr v1.12.3 // indirect
+	github.com/antonmedv/expr v1.12.5 // indirect
 	github.com/drone/envsubst v1.0.3 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -24,7 +24,7 @@ require (
 	github.com/goexl/gex v0.3.0 // indirect
 	github.com/goexl/guc v0.0.7 // indirect
 	github.com/goexl/mengpo v0.2.4 // indirect
-	github.com/goexl/simaqian v0.2.3 // indirect
+	github.com/goexl/simaqian v0.2.4 // indirect
 	github.com/goexl/xiren v0.0.5 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
