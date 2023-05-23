@@ -6,7 +6,7 @@ require (
 	github.com/dronestock/drone v1.0.1
 	github.com/goexl/gfx v0.1.7
 	github.com/goexl/gox v0.3.4
-	github.com/jlaffaye/ftp v0.1.0
+	github.com/jlaffaye/ftp v0.2.0
 	github.com/rickb777/gowebdav v0.1.0
 )
 
