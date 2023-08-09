@@ -1,3 +1,25 @@
+kind: secret
+name: token_docker
+get:
+  path: secrets
+  name: token_docker_dronestock
+---
+
+kind: secret
+name: password_ccr
+get:
+  path: secrets
+  name: password_ccr
+---
+
+kind: secret
+name: token_github
+get:
+  path: secrets
+  name: token_github_storezhang
+---
+
+
 kind: pipeline
 type: docker
 name: 发布
@@ -7,20 +29,43 @@ clone:
   disable: true
 
 
+environment:
+  NAME: file
+  OUTPUT_LINUX: file.amd64.lin
+  OUTPUT_WINDOWS: file.amd64.exe
+  OUTPUT_MAC: file.amd64.mac
+  CHANGELOG_TAG_OUTPUT: CHANGELOG.tag.md
+
+
 steps:
-  - name: 代码
+  - name: 取码
     image: ccr.ccs.tencentyun.com/dronestock/git
+    pull: always
 
   - name: 编译
     image: ccr.ccs.tencentyun.com/pangum/drone
+    pull: always
     volumes:
       - name: go
         path: /var/lib/go
     settings:
-      output: file
+      outputs:
+        - name: $${NAME}
+          os: linux
+          arch: amd64
+        - name: $${OUTPUT_LINUX}
+          os: linux
+          arch: amd64
+        - name: $${OUTPUT_WINDOWS}
+          os: windows
+          arch: amd64
+        - name: $${OUTPUT_MAC}
+          os: darwin
+          arch: amd64
 
-  - name: 发布
+  - name: Android
     image: ccr.ccs.tencentyun.com/dronestock/docker
+    pull: always
     privileged: true
     volumes:
       - name: docker
@@ -29,9 +74,9 @@ steps:
       PASSWORD_DOCKER:
         from_secret: token_docker
       PASSWORD_CCR:
-        from_secret: password_tencentyun_ccr
+        from_secret: password_ccr
     settings:
-      repository: dronestock/file
+      repository: dronestock/$${NAME}
       registries:
         - username: dronestock
           password: $${PASSWORD_DOCKER}
@@ -39,6 +84,39 @@ steps:
           username: "160290688"
           password: $${PASSWORD_CCR}
           required: true
+
+  - name: 改变
+    image: ccr.ccs.tencentyun.com/dronestock/changelog
+    pull: always
+    when:
+      event:
+        - tag
+    settings:
+      output: $${CHANGELOG_TAG_OUTPUT}
+      tag: $${DRONE_TAG}
+
+  - name: 发布
+    image: ccr.ccs.tencentyun.com/dronestock/github
+    pull: always
+    when:
+      event:
+        - tag
+    environment:
+      VERSION: $${DRONE_TAG##v}
+      TOKEN:
+        from_secret: token_github
+    settings:
+      release:
+        tag: $${DRONE_TAG}
+        token: $${TOKEN}
+        body: file('$${CHANGELOG_TAG_OUTPUT}')
+        assets:
+          - name: $${NAME}-$${VERSION}-linux-amd64
+            file: $${OUTPUT_LINUX}
+          - name: $${NAME}-$${VERSION}-windows-amd64.exe
+            file: $${OUTPUT_WINDOWS}
+          - name: $${NAME}-$${VERSION}-darwin-amd64
+            file: $${OUTPUT_MAC}
 
 
 volumes:
