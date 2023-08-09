@@ -2,8 +2,9 @@ package main
 
 import (
 	"github.com/dronestock/drone"
+	"github.com/dronestock/file/internal"
 )
 
 func main() {
-	panic(drone.Bootstrap(newPlugin))
+	drone.New(internal.NewPlugin).Boot()
 }
