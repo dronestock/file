@@ -2,8 +2,8 @@ package core
 
 const (
 	TypeFtp    Type = "ftp"
-	TypeWebdav      = "webdav"
-	TypeSsh         = "ssh"
+	TypeWebdav Type = "webdav"
+	TypeSsh    Type = "ssh"
 )
 
 type Type string
