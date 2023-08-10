@@ -63,7 +63,7 @@ steps:
           os: darwin
           arch: amd64
 
-  - name: Android
+  - name: 推包
     image: ccr.ccs.tencentyun.com/dronestock/docker
     pull: always
     privileged: true
