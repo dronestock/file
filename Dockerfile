@@ -20,7 +20,7 @@ RUN set -ex \
     \
     \
     && apk update \
-    && apk --no-cache add openssh-client sshpass \
+    && apk --no-cache add openssh-client sshpass curl \
     # 增加执行权限 \
     && chmod +x /usr/local/bin/scpx \
     && chmod +x /usr/local/bin/file \

@@ -7,6 +7,7 @@ import (
 
 	"github.com/dronestock/drone"
 	"github.com/dronestock/file/internal/core"
+	"github.com/dronestock/file/internal/internal"
 	"github.com/goexl/gox/args"
 )
 
@@ -41,7 +42,7 @@ func (s *Ssh) Upload(ctx context.Context, path string, dir string, name string, 
 	_args.Arg("password", s.password)
 	_args.Arg("local", path)
 	_args.Arg("remote", fmt.Sprintf("%s/%s", dir, name))
-	_, err = s.Command("scpx").Context(ctx).Args(_args.Build()).Build().Exec()
+	_, err = s.Command(internal.CommandScp).Context(ctx).Args(_args.Build()).Build().Exec()
 
 	return
 }

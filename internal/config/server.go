@@ -31,7 +31,7 @@ func (s *Server) Upload(ctx context.Context, base *drone.Base, uploads []*Upload
 	var _uploader core.Uploader
 	switch s.Type {
 	case core.TypeWebdav:
-		_uploader = uploader.NewWebdav(s.Addr, s.Username, s.Password)
+		_uploader = uploader.NewWebdav(base, s.Addr, s.Username, s.Password)
 	case core.TypeFtp:
 		_uploader, err = uploader.NewFtp(s.Addr, s.Username, s.Password, s.Timeout)
 	case core.TypeSsh:
