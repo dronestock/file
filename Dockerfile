@@ -1,10 +1,10 @@
-FROM storezhang/alpine:3.19.0 AS builder
+FROM storezhang/alpine:3.19.1 AS builder
 
 COPY docker /docker
 COPY file /docker/usr/local/bin
 
 
-FROM storezhang/alpine:3.19.0
+FROM storezhang/alpine:3.19.1
 
 
 LABEL author="storezhang<华寅>" \
