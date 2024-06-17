@@ -36,13 +36,13 @@ func (s *Ssh) Mkdir(_ context.Context, _ string, _ os.FileMode) (err error) {
 }
 
 func (s *Ssh) Upload(ctx context.Context, path string, dir string, name string, _ os.FileMode) (err error) {
-	_args := args.New().Build()
-	_args.Arg("addr", s.addr)
-	_args.Arg("username", s.username)
-	_args.Arg("password", s.password)
-	_args.Arg("local", path)
-	_args.Arg("remote", fmt.Sprintf("%s/%s", dir, name))
-	_, err = s.Command(internal.CommandScp).Context(ctx).Args(_args.Build()).Build().Exec()
+	arguments := args.New().Build()
+	arguments.Arg("addr", s.addr)
+	arguments.Arg("username", s.username)
+	arguments.Arg("password", s.password)
+	arguments.Arg("local", path)
+	arguments.Arg("remote", fmt.Sprintf("%s/%s", dir, name))
+	_, err = s.Command(internal.CommandScp).Context(ctx).Args(arguments.Build()).Build().Exec()
 
 	return
 }

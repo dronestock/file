@@ -8,7 +8,7 @@ import (
 	"github.com/goexl/gox/field"
 )
 
-type Plugin struct {
+type plugin struct {
 	drone.Base
 	config.Upload
 	config.Server `validate:"omitempty,required_without=Servers"`
@@ -20,14 +20,14 @@ type Plugin struct {
 }
 
 func NewPlugin() drone.Plugin {
-	return new(Plugin)
+	return new(plugin)
 }
 
-func (p *Plugin) Config() drone.Config {
+func (p *plugin) Config() drone.Config {
 	return p
 }
 
-func (p *Plugin) Setup() (err error) {
+func (p *plugin) Setup() (err error) {
 	if nil == p.Servers {
 		p.Servers = make([]*config.Server, 0, 1)
 	}
@@ -45,13 +45,13 @@ func (p *Plugin) Setup() (err error) {
 	return
 }
 
-func (p *Plugin) Steps() drone.Steps {
+func (p *plugin) Steps() drone.Steps {
 	return drone.Steps{
 		drone.NewStep(step.NewUpload(&p.Base, p.Servers, p.Uploads)).Name("上传").Interrupt().Build(),
 	}
 }
 
-func (p *Plugin) Fields() gox.Fields[any] {
+func (p *plugin) Fields() gox.Fields[any] {
 	return gox.Fields[any]{
 		field.New("servers", p.Servers),
 		field.New("uploads", p.Uploads),

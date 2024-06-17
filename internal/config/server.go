@@ -2,7 +2,6 @@ package config
 
 import (
 	"context"
-	"time"
 
 	"github.com/dronestock/drone"
 	"github.com/dronestock/file/internal/core"
@@ -12,15 +11,15 @@ import (
 
 type Server struct {
 	// 类型
-	Type core.Type `default:"${TYPE=ssh}" json:"type,omitempty" validate:"required,oneof=ssh webdav ftp"`
-	// 地址
-	Addr string `default:"${ADDR}" json:"addr,omitempty" validate:"required,ip|hostname|hostname_port|url"`
-	// 用户名
-	Username string `default:"${USERNAME}" json:"username,omitempty" validate:"required"`
-	// 密码
-	Password string `default:"${PASSWORD}" json:"password,omitempty" validate:"required"`
-	// 超时
-	Timeout time.Duration `default:"${TIMEOUT=5s}" json:"timeout,omitempty"`
+	Type core.Type `default:"${TYPE=ssh}" json:"type,omitempty" validate:"required,oneof=ssh webdav ftp feishu lark"`
+	// 基于安全连接
+	SSH *Hosted `json:"ssh,omitempty" validate:"required_if=Type ssh"`
+	// 基于文本协议
+	Webdav *Hosted `json:"webdav,omitempty" validate:"required_if=Type webdav"`
+	// 基于古老的文件服务
+	Ftp *Hosted `json:"ftp,omitempty" validate:"required_if=Type ftp"`
+	// 飞书
+	Lark *Lark `json:"lark,omitempty" validate:"required_if=Type feishu | required_if=Type lark"`
 }
 
 func (s *Server) Set() bool {

@@ -1,11 +1,4 @@
 kind: secret
-name: token_docker
-get:
-  path: secrets
-  name: token_docker_dronestock
----
-
-kind: secret
 name: password_ccr
 get:
   path: secrets
@@ -17,6 +10,20 @@ name: token_github
 get:
   path: secrets
   name: token_github_storezhang
+---
+
+kind: secret
+name: id_feishu
+get:
+  path: secrets
+  name: id_feishu
+---
+
+kind: secret
+name: secret_feishu
+get:
+  path: secrets
+  name: secret_feishu
 ---
 
 
@@ -31,9 +38,10 @@ clone:
 
 environment:
   NAME: file
-  OUTPUT_LINUX: file.amd64.lin
-  OUTPUT_WINDOWS: file.amd64.exe
-  OUTPUT_MAC: file.amd64.mac
+  OUTPUT_LINUX_DIR: dist/linux
+  OUTPUT_LINUX_ARM_V7: arm/v7
+  OUTPUT_LINUX_ARM64: arm64
+  OUTPUT_LINUX_AMD64: amd64
   CHANGELOG_TAG_OUTPUT: CHANGELOG.tag.md
 
 
@@ -50,18 +58,16 @@ steps:
         path: /var/lib/go
     settings:
       outputs:
-        - name: $${NAME}
+        - name: $${OUTPUT_LINUX_DIR}/$${OUTPUT_LINUX_AMD64}/$${NAME}
           os: linux
           arch: amd64
-        - name: $${OUTPUT_LINUX}
+        - name: $${OUTPUT_LINUX_DIR}/$${OUTPUT_LINUX_ARM64}/$${NAME}
           os: linux
-          arch: amd64
-        - name: $${OUTPUT_WINDOWS}
-          os: windows
-          arch: amd64
-        - name: $${OUTPUT_MAC}
-          os: darwin
-          arch: amd64
+          arch: arm64
+        - name: $${OUTPUT_LINUX_DIR}/$${OUTPUT_LINUX_ARM_V7}/$${NAME}
+          os: linux
+          arch: arm
+          arm: 7
 
   - name: 推包
     image: ccr.ccs.tencentyun.com/dronestock/docker
@@ -77,13 +83,14 @@ steps:
         from_secret: password_ccr
     settings:
       repository: dronestock/$${NAME}
-      registries:
-        - username: dronestock
-          password: $${PASSWORD_DOCKER}
-        - hostname: ccr.ccs.tencentyun.com
-          username: "160290688"
-          password: $${PASSWORD_CCR}
-          required: true
+      platforms:
+        - arch: amd64
+        - arch: arm64
+        - arch: arm
+      registry:
+        hostname: ccr.ccs.tencentyun.com
+        username: "160290688"
+        password: $${PASSWORD_CCR}
 
   - name: 改变
     image: ccr.ccs.tencentyun.com/dronestock/changelog
@@ -117,6 +124,21 @@ steps:
             file: $${OUTPUT_WINDOWS}
           - name: $${NAME}-$${VERSION}-darwin-amd64
             file: $${OUTPUT_MAC}
+
+  - name: 通知
+    image: ccr.ccs.tencentyun.com/dronestock/feishu
+    pull: always
+    when:
+      status:
+        - success
+        - failure
+    settings:
+      id:
+        from_secret: id_feishu
+      secret:
+        from_secret: secret_feishu
+      notfound:
+        id: storezhang
 
 
 volumes:
