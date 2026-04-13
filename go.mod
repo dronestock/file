@@ -1,13 +1,13 @@
 module github.com/dronestock/file
 
-go 1.19
+go 1.25.0
 
 require (
 	github.com/dronestock/drone v1.0.2
 	github.com/goexl/gfx v0.1.7
 	github.com/goexl/gox v0.3.6
 	github.com/jlaffaye/ftp v0.2.0
-	github.com/rickb777/gowebdav v0.1.0
+	github.com/rickb777/gowebdav v0.8.0
 )
 
 require (
@@ -32,13 +32,13 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
-	github.com/rickb777/httpclient v0.0.6 // indirect
+	github.com/rickb777/httpclient v0.50.0 // indirect
 	github.com/rs/xid v1.5.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.25.0 // indirect
-	golang.org/x/crypto v0.12.0 // indirect
-	golang.org/x/net v0.14.0 // indirect
-	golang.org/x/sys v0.11.0 // indirect
-	golang.org/x/text v0.12.0 // indirect
+	golang.org/x/crypto v0.49.0 // indirect
+	golang.org/x/net v0.52.0 // indirect
+	golang.org/x/sys v0.42.0 // indirect
+	golang.org/x/text v0.35.0 // indirect
 )
