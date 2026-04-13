@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/dronestock/drone v1.0.2
-	github.com/goexl/gfx v0.1.7
+	github.com/goexl/gfx v0.2.8
 	github.com/goexl/gox v0.3.6
 	github.com/jlaffaye/ftp v0.2.0
 	github.com/rickb777/gowebdav v0.8.0
@@ -13,7 +13,7 @@ require (
 require (
 	github.com/antonmedv/expr v1.12.7 // indirect
 	github.com/drone/envsubst v1.0.3 // indirect
-	github.com/fsnotify/fsnotify v1.6.0 // indirect
+	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
